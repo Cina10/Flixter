@@ -1,6 +1,7 @@
 package com.example.flixter.models;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ public class Movie {
     String overview;
 
     public String getPosterPath() {
-        return posterPath;
+        return String.format("https://image.tmdb.org/t/p/w342/%s", posterPath); //hardcoding for right now
     }
 
     public String getTitle() {
@@ -24,19 +25,20 @@ public class Movie {
         return overview;
     }
 
-    public Movie(JSONObject jsonObject) {
+    public Movie(JSONObject jsonObject) throws JSONException {
         this.posterPath = jsonObject.getString("poster_path");
         this.title = jsonObject.getString("title");
         this.overview = jsonObject.getString("overview");
     }
 
     //returns a list of movies from JSON array
-    public static List<Movie> fromJsonArray(JSONArray movieJasonArray)
+    public static List<Movie> fromJsonArray(JSONArray movieJasonArray) throws JSONException
     {
-        List<Movie> movie = new ArrayList<>();
+        List<Movie> movies = new ArrayList<>();
         for(int i = 0; i<movieJasonArray.length();i++)
         {
-            movie.add(new Movie(movieJasonArray.getJSONObject(i));
+            movies.add(new Movie(movieJasonArray.getJSONObject(i)));
         }
+        return movies;
     }
 }
