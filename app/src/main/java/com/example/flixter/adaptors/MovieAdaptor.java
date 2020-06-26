@@ -1,6 +1,7 @@
 package com.example.flixter.adaptors;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,8 +19,11 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 
 import com.bumptech.glide.request.target.Target;
+import com.example.flixter.MovieDetailsActivity;
 import com.example.flixter.R;
 import com.example.flixter.models.Movie;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -59,15 +64,31 @@ public class MovieAdaptor extends RecyclerView.Adapter<MovieAdaptor.ViewHolder> 
 
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder{ //view holder is a rep of our row in the recycler view
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{ //view holder is a rep of our row in the recycler view
         TextView tvTitle;
         TextView tvOverview;
         ImageView ivPoster;
+
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvOverview = itemView.findViewById(R.id.tvOverview);
             ivPoster = itemView.findViewById(R.id.ivPoster);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+           int position = getAdapterPosition();
+           if(position != RecyclerView.NO_POSITION){
+               Movie movie = movies.get(position);
+               Intent intent = new Intent(context, MovieDetailsActivity.class);
+               intent.putExtra(Movie.class.getSimpleName(), Parcels.wrap(movie));
+               context.startActivity(intent);
+           }
+
         }
 
         public void bind(Movie movie) {

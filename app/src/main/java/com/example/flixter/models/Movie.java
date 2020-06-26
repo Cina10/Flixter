@@ -4,17 +4,33 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Movie {
+import javax.annotation.ParametersAreNonnullByDefault;
 
+@Parcel
+public class Movie {
 
     String backdropPath;
     String posterPath;
     String title;
     String overview;
+    Double voteAve;
+
+    //no args constructor
+    public Movie() { }
+
+    //constructor
+    public Movie(@NotNull JSONObject jsonObject) throws JSONException {
+        this.backdropPath = jsonObject.getString("backdrop_path");
+        this.posterPath = jsonObject.getString("poster_path");
+        this.title = jsonObject.getString("title");
+        this.overview = jsonObject.getString("overview");
+        this.voteAve = jsonObject.getDouble("vote_average");
+    }
 
     public String getPosterPath() {
         return String.format("https://image.tmdb.org/t/p/w342/%s", posterPath); //hardcoding for right now
@@ -32,12 +48,7 @@ public class Movie {
         return overview;
     }
 
-    public Movie(@NotNull JSONObject jsonObject) throws JSONException {
-        this.backdropPath = jsonObject.getString("backdrop_path");
-        this.posterPath = jsonObject.getString("poster_path");
-        this.title = jsonObject.getString("title");
-        this.overview = jsonObject.getString("overview");
-    }
+    public Double getVoteAve() { return voteAve; }
 
     //returns a list of movies from JSON array
     public static List<Movie> fromJsonArray(JSONArray movieJasonArray) throws JSONException

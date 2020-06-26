@@ -67,4 +67,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    public static class MovieDetailsActivity {
+        Movie movie;
+
+    }
 }
