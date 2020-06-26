@@ -12,7 +12,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+
+import com.bumptech.glide.request.target.Target;
 import com.example.flixter.R;
 import com.example.flixter.models.Movie;
 
@@ -69,14 +73,30 @@ public class MovieAdaptor extends RecyclerView.Adapter<MovieAdaptor.ViewHolder> 
         public void bind(Movie movie) {
             tvTitle.setText(movie.getTitle());
             tvOverview.setText(movie.getOverview());
-            String imageUrl;
-            //sets image for landscape vs portrait
-            if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
-                imageUrl = movie.getBackdropPath();
-            else
-                imageUrl = movie.getPosterPath();
+
             //needs to render image. Android doesn't have a way to do this, so must use library
-            Glide.with(context).load(imageUrl).into(ivPoster);
+            String imageUrl;
+            int radius = 30; // corner radius, higher value = more rounded
+            //sets image for landscape vs portrait
+            if(context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                imageUrl = movie.getBackdropPath();
+                Glide.with(context).load(imageUrl)
+                        .transform(new RoundedCorners(radius))
+                        .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                        .placeholder(R.mipmap.placeholder_landscape_foreground).into(ivPoster);
+            }
+
+            else {
+                imageUrl = movie.getPosterPath();
+                Glide.with(context).load(imageUrl)
+                        .transform(new RoundedCorners(radius))
+                        .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                        .placeholder(R.mipmap.placeholder_foreground).into(ivPoster);
+            }
+
+
+            //original code
+            //Glide.with(context).load(imageUrl).into(ivPoster);
 
         }
     }
