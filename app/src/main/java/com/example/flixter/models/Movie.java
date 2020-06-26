@@ -1,5 +1,7 @@
 package com.example.flixter.models;
 
+import android.util.Log;
+
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,7 +22,7 @@ public class Movie {
     String overview;
     Double voteAve;
 
-    //no args constructor
+    //no
     public Movie() { }
 
     //constructor
@@ -45,7 +47,9 @@ public class Movie {
     }
 
     public String getOverview() {
+        Log.i("MovieDetailActivity", overview);
         return overview;
+
     }
 
     public Double getVoteAve() { return voteAve; }
