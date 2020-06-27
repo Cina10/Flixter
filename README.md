@@ -34,6 +34,8 @@ Here's a walkthrough of implemented user stories:
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
+![Walkthrough](walkthrough.gif)
+
 ## Notes
 I had challenges with the XML. I can't get the landscape version of my movie details page to scroll past the image to the text.
 I also couldn't figure out how to control the sixe of the images. I would attempt to do so, and them it would just make the padding
